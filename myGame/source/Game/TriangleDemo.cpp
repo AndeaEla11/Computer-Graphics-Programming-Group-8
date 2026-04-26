@@ -13,7 +13,7 @@ namespace Rendering
     TriangleDemo::TriangleDemo(Game& game, Camera& camera)
         : DrawableGameComponent(game, camera),
           mEffect(nullptr), mTechnique(nullptr), mPass(nullptr), mWvpVariable(nullptr),
-          mInputLayout(nullptr), mWorldMatrix(MatrixHelper::Identity), mVertexBuffer(nullptr), mAngle(0.0f)
+          mInputLayout(nullptr), mWorldMatrix(MatrixHelper::Identity), mVertexBuffer(nullptr), mIndexBuffer(nullptr), mAngle(0.0f)
     {
     }
 
@@ -107,29 +107,12 @@ namespace Rendering
 		//insert code here
         BasicEffectVertex vertices[] =
         {
-            BasicEffectVertex(XMFLOAT4(0.0f, 0.6f, 0.0f, 1.0f), XMFLOAT4(0.0f, 0.0f,1.0f,1.0f)),
-            BasicEffectVertex(XMFLOAT4(-0.5f, -0.5f, 0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f)),
-            BasicEffectVertex(XMFLOAT4(0.5f, -0.5f, 0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
+            BasicEffectVertex(XMFLOAT4(-1.0f, 0.0f, -1.0f, 1.0f), XMFLOAT4(1,0,0,1)),
+            BasicEffectVertex(XMFLOAT4(1.0f, 0.0f, -1.0f, 1.0f), XMFLOAT4(0,1,0,1)),
+            BasicEffectVertex(XMFLOAT4(1.0f, 0.0f,  1.0f, 1.0f), XMFLOAT4(0,0,1,1)),
+            BasicEffectVertex(XMFLOAT4(-1.0f, 0.0f,  1.0f, 1.0f), XMFLOAT4(1,1,0,1)), 
 
-            BasicEffectVertex(XMFLOAT4(0.0f, 0.6f, 0.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f,1.0f)),
-            BasicEffectVertex(XMFLOAT4(0.5f, -0.5f, 0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-            BasicEffectVertex(XMFLOAT4(0.5f, -0.5f, -0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-
-            BasicEffectVertex(XMFLOAT4(0.0f, 0.6f, 0.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f,1.0f)),
-            BasicEffectVertex(XMFLOAT4(0.5f, -0.5f, -0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-            BasicEffectVertex(XMFLOAT4(-0.5f, -0.5f, -0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-
-            BasicEffectVertex(XMFLOAT4(0.0f, 0.6f, 0.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)),
-            BasicEffectVertex(XMFLOAT4(-0.5f, -0.5f, -0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-            BasicEffectVertex(XMFLOAT4(-0.5f, -0.5f, 0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-
-            BasicEffectVertex(XMFLOAT4(-0.5f, -0.5f, 0.5f, 1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f,1.0f)),
-            BasicEffectVertex(XMFLOAT4(0.5f, -0.5f, 0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-            BasicEffectVertex(XMFLOAT4(0.5f, -0.5f, -0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-
-            BasicEffectVertex(XMFLOAT4(-0.5f, -0.5f, 0.5f, 1.0f), XMFLOAT4(0.0f, 0.0f,1.0f,1.0f)),
-            BasicEffectVertex(XMFLOAT4(0.5f, -0.5f, -0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
-            BasicEffectVertex(XMFLOAT4(-0.5f, -0.5f, -0.5f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)),
+            BasicEffectVertex(XMFLOAT4(0.0f, 2.0f, 0.0f, 1.0f), XMFLOAT4(1,0,1,1)) 
         };
 
         D3D11_BUFFER_DESC vertexBufferDesc;
@@ -144,6 +127,30 @@ namespace Rendering
         {
             throw GameException("ID3D11Device::CreateBuffer() failed.");
         }
+
+        UINT indices[] =
+        {
+            0, 1, 2,
+            0, 2, 3,
+            0, 1, 4,
+            1, 2, 4,
+            2, 3, 4,
+            3, 0, 4
+        };
+
+        D3D11_BUFFER_DESC indexBufferDesc;
+        ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
+        indexBufferDesc.ByteWidth = sizeof(UINT) * ARRAYSIZE(indices);
+        indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+        indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+        D3D11_SUBRESOURCE_DATA indexSubResourceData;
+        ZeroMemory(&indexSubResourceData, sizeof(indexSubResourceData));
+        indexSubResourceData.pSysMem = indices;
+        if (FAILED(mGame->Direct3DDevice()->CreateBuffer(&indexBufferDesc, &indexSubResourceData, &mIndexBuffer)))
+        {
+            throw GameException("ID3D11Device::CreateBuffer() failed.");
+        }
+
     }
 
 	void TriangleDemo::Update(const GameTime& gameTime)
@@ -162,10 +169,13 @@ namespace Rendering
         UINT stride = sizeof(BasicEffectVertex);
         UINT offset = 0;
         direct3DDeviceContext->IASetVertexBuffers(0, 1, &mVertexBuffer, &stride, &offset);
+
+        direct3DDeviceContext->IASetIndexBuffer(mIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
         XMMATRIX worldMatrix = XMLoadFloat4x4(&mWorldMatrix);
         XMMATRIX wvp = worldMatrix * mCamera->ViewMatrix() * mCamera->ProjectionMatrix();
         mWvpVariable->SetMatrix(reinterpret_cast<const float*>(&wvp));
         mPass->Apply(0, direct3DDeviceContext);
-        direct3DDeviceContext->Draw(18, 0);
+        direct3DDeviceContext->DrawIndexed(18, 0, 0);
     }
 }
