@@ -9,7 +9,7 @@
 namespace Rendering
 {;
 
-	const XMFLOAT4 RenderingGame::BackgroundColor = { 0.3f, 0.1f, 0.6f, 1.0f };
+	const XMFLOAT4 RenderingGame::BackgroundColor = { 0.0f, 0.1f, 1.0f, 1.0f };
 
     RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
         :  Game(instance, windowClass, windowTitle, showCommand),
@@ -34,8 +34,8 @@ namespace Rendering
         mComponents.push_back(mCamera);
         mServices.AddService(Camera::TypeIdClass(), mCamera);
     
-        //mDemo = new TriangleDemo(*this, *mCamera);
-        //mComponents.push_back(mDemo);
+        mDemo = new TriangleDemo(*this, *mCamera);
+        mComponents.push_back(mDemo);
 
         if (FAILED(DirectInput8Create(mInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&mDirectInput, nullptr)))
         {
@@ -61,7 +61,7 @@ namespace Rendering
 
     void RenderingGame::Shutdown()
     {
-		//DeleteObject(mDemo);
+		DeleteObject(mDemo);
         DeleteObject(mCamera);
         Game::Shutdown();
 		DeleteObject(mMouse);

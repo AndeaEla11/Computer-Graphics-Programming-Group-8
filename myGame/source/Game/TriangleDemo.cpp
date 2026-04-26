@@ -92,11 +92,12 @@ namespace Rendering
 
 		//2. create the vetex layout
 		//insert code here
-		D3D11_INPUT_ELEMENT_DESC inputElementDescriptions[] =
+        D3D11_INPUT_ELEMENT_DESC inputElementDescriptions[] =
         {
-            { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-            {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-		};
+            { "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+            { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+        };
+
         if (FAILED(hr = mGame->Direct3DDevice()->CreateInputLayout(inputElementDescriptions, ARRAYSIZE(inputElementDescriptions), passDesc.pIAInputSignature, passDesc.IAInputSignatureSize, &mInputLayout)))
         {
             throw GameException("ID3D11Device::CreateInputLayout() failed.", hr);
@@ -107,12 +108,10 @@ namespace Rendering
 		//insert code here
         BasicEffectVertex vertices[] =
         {
-            BasicEffectVertex(XMFLOAT4(-1.0f, 0.0f, -1.0f, 1.0f), XMFLOAT4(1,0,0,1)),
-            BasicEffectVertex(XMFLOAT4(1.0f, 0.0f, -1.0f, 1.0f), XMFLOAT4(0,1,0,1)),
-            BasicEffectVertex(XMFLOAT4(1.0f, 0.0f,  1.0f, 1.0f), XMFLOAT4(0,0,1,1)),
-            BasicEffectVertex(XMFLOAT4(-1.0f, 0.0f,  1.0f, 1.0f), XMFLOAT4(1,1,0,1)), 
-
-            BasicEffectVertex(XMFLOAT4(0.0f, 2.0f, 0.0f, 1.0f), XMFLOAT4(1,0,1,1)) 
+            BasicEffectVertex(XMFLOAT4(-10.0f, 0.0f, -10.0f, 1.0f), XMFLOAT4(0, 1, 0, 1)),
+            BasicEffectVertex(XMFLOAT4(10.0f, 0.0f, -10.0f, 1.0f), XMFLOAT4(0, 1, 0, 1)),
+            BasicEffectVertex(XMFLOAT4(10.0f, 0.0f, 10.0f, 1.0f), XMFLOAT4(0, 1, 0, 1)),
+            BasicEffectVertex(XMFLOAT4(-10.0f, 0.0f, 10.0f, 1.0f), XMFLOAT4(0, 1, 0, 1))
         };
 
         D3D11_BUFFER_DESC vertexBufferDesc;
@@ -131,11 +130,7 @@ namespace Rendering
         UINT indices[] =
         {
             0, 1, 2,
-            0, 2, 3,
-            0, 1, 4,
-            1, 2, 4,
-            2, 3, 4,
-            3, 0, 4
+            0, 2, 3
         };
 
         D3D11_BUFFER_DESC indexBufferDesc;
@@ -155,8 +150,7 @@ namespace Rendering
 
 	void TriangleDemo::Update(const GameTime& gameTime)
 	{
-        mAngle += XM_PI * static_cast<float>(gameTime.ElapsedGameTime());
-        XMStoreFloat4x4(&mWorldMatrix, XMMatrixRotationY(mAngle));
+        XMStoreFloat4x4(&mWorldMatrix, XMMatrixIdentity());
 	}
 
     void TriangleDemo::Draw(const GameTime& gameTime)
@@ -176,6 +170,6 @@ namespace Rendering
         XMMATRIX wvp = worldMatrix * mCamera->ViewMatrix() * mCamera->ProjectionMatrix();
         mWvpVariable->SetMatrix(reinterpret_cast<const float*>(&wvp));
         mPass->Apply(0, direct3DDeviceContext);
-        direct3DDeviceContext->DrawIndexed(18, 0, 0);
+        direct3DDeviceContext->DrawIndexed(6, 0, 0);
     }
 }
