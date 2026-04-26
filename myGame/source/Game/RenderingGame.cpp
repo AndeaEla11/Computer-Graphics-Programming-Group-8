@@ -5,6 +5,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "ModelFromFile.h"
+#include "FpsComponent.h"
+#include "RenderStateHelper.h"
 
 namespace Rendering
 {;
@@ -17,7 +19,9 @@ namespace Rendering
 		mDirectInput(nullptr),
 		mKeyboard(nullptr),
 		mMouse(nullptr),
-		mModel(nullptr)
+		mModel(nullptr),
+		mFpsComponent(nullptr),
+		mRenderStateHelper(nullptr)
     {
         mDepthStencilBufferEnabled = true;
         mMultiSamplingEnabled = true;
@@ -53,6 +57,9 @@ namespace Rendering
         mModel->SetPosition(-1.57f, -0.0f, -0.0f, 0.005f, 0.0f, 0.6f, 0.0f);
         mComponents.push_back(mModel);
 
+        mFpsComponent = new FpsComponent(*this);
+        mFpsComponent->Initialize();
+        mRenderStateHelper = new RenderStateHelper(*this);
 
         Game::Initialize();
 
@@ -72,20 +79,23 @@ namespace Rendering
 
     void RenderingGame::Update(const GameTime &gameTime)
     {
-
+        mFpsComponent->Update(gameTime);
         Game::Update(gameTime);
 
         if (mKeyboard->WasKeyPressedThisFrame(DIK_ESCAPE))
         {
             Exit();
         }
-
     }
 
     void RenderingGame::Draw(const GameTime &gameTime)
     {
         mDirect3DDeviceContext->ClearRenderTargetView(mRenderTargetView, reinterpret_cast<const float*>(&BackgroundColor));
         mDirect3DDeviceContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+        
+        mRenderStateHelper->SaveAll();
+        mFpsComponent->Draw(gameTime);
+        mRenderStateHelper->RestoreAll();
 
         Game::Draw(gameTime);
        
