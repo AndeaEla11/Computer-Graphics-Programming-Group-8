@@ -57,6 +57,9 @@ namespace Rendering
 		DeleteObject(mDemo);
         DeleteObject(mCamera);
         Game::Shutdown();
+		DeleteObject(mMouse);
+        DeleteObject(mKeyboard);
+		ReleaseObject(mDirectInput);
     }
 
     void RenderingGame::Update(const GameTime &gameTime)
