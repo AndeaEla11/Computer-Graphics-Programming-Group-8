@@ -23,7 +23,7 @@ namespace Rendering
 
 
 		//add to support multiple model in the scene, remove this function
-
+		void SetPosition(const float rotateX, const float rotateY, const float rotateZ, const float scaleFactor, const float translateX, const float translateY, const float translateZ);
 		
 
 		

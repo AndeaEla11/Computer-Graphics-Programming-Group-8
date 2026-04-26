@@ -4,6 +4,7 @@
 #include "TriangleDemo.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "ModelFromFile.h"
 
 namespace Rendering
 {;
@@ -15,7 +16,8 @@ namespace Rendering
         mDemo(nullptr),
 		mDirectInput(nullptr),
 		mKeyboard(nullptr),
-		mMouse(nullptr)
+		mMouse(nullptr),
+		mModel(nullptr)
     {
         mDepthStencilBufferEnabled = true;
         mMultiSamplingEnabled = true;
@@ -32,8 +34,8 @@ namespace Rendering
         mComponents.push_back(mCamera);
         mServices.AddService(Camera::TypeIdClass(), mCamera);
     
-        mDemo = new TriangleDemo(*this, *mCamera);
-        mComponents.push_back(mDemo);
+        //mDemo = new TriangleDemo(*this, *mCamera);
+        //mComponents.push_back(mDemo);
 
         if (FAILED(DirectInput8Create(mInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&mDirectInput, nullptr)))
         {
@@ -47,6 +49,11 @@ namespace Rendering
         mComponents.push_back(mMouse);
         mServices.AddService(Mouse::TypeIdClass(), mMouse);
 
+        mModel = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds");
+        mModel->SetPosition(-1.57f, -0.0f, -0.0f, 0.005f, 0.0f, 0.6f, 0.0f);
+        mComponents.push_back(mModel);
+
+
         Game::Initialize();
 
 		mCamera->SetPosition(0.0f, 0.0f, 5.0f);
@@ -54,12 +61,13 @@ namespace Rendering
 
     void RenderingGame::Shutdown()
     {
-		DeleteObject(mDemo);
+		//DeleteObject(mDemo);
         DeleteObject(mCamera);
         Game::Shutdown();
 		DeleteObject(mMouse);
         DeleteObject(mKeyboard);
 		ReleaseObject(mDirectInput);
+		DeleteObject(mModel);
     }
 
     void RenderingGame::Update(const GameTime &gameTime)

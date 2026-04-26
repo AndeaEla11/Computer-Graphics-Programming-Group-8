@@ -16,6 +16,7 @@ namespace Library
 namespace Rendering
 {
     class TriangleDemo;
+	class ModelFromFile;
 
     class RenderingGame : public Game
     {
@@ -37,5 +38,6 @@ namespace Rendering
         LPDIRECTINPUT8 mDirectInput;
 		Keyboard* mKeyboard;
 		Mouse* mMouse;
+        ModelFromFile* mModel;
     };
 }
