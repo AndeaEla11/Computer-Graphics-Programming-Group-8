@@ -19,16 +19,15 @@ namespace Rendering
 		virtual void Draw(const GameTime& gameTime) override;
 
     private:
-        typedef struct _BasicEffectVertex
+        typedef struct _TextureMappingVertex
         {
             XMFLOAT4 Position;
-            XMFLOAT4 Color;
-
-            _BasicEffectVertex() { }
-
-            _BasicEffectVertex(XMFLOAT4 position, XMFLOAT4 color)
-                : Position(position), Color(color) { }
-        } BasicEffectVertex;
+            XMFLOAT2 TextureCoordinates;
+            _TextureMappingVertex() {}
+            _TextureMappingVertex(XMFLOAT4 position, XMFLOAT2 textureCoordinates)
+                : Position(position), TextureCoordinates(textureCoordinates) {
+            }
+        } TextureMappingVertex;
 
         TriangleDemo();
         TriangleDemo(const TriangleDemo& rhs);
@@ -43,6 +42,10 @@ namespace Rendering
         ID3D11Buffer* mVertexBuffer;
 
 		ID3D11Buffer* mIndexBuffer;
+
+        ID3D11ShaderResourceView* mTextureShaderResourceView;
+        ID3DX11EffectShaderResourceVariable* mColorTextureVariable;
+
 
         XMFLOAT4X4 mWorldMatrix;
 		float mAngle;
