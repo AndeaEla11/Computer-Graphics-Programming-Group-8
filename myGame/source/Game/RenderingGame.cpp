@@ -2,6 +2,8 @@
 #include "GameException.h"
 #include "FirstPersonCamera.h"
 #include "TriangleDemo.h"
+#include "Keyboard.h"
+#include "Mouse.h"
 
 namespace Rendering
 {;
@@ -10,7 +12,10 @@ namespace Rendering
 
     RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
         :  Game(instance, windowClass, windowTitle, showCommand),
-        mDemo(nullptr)
+        mDemo(nullptr),
+		mDirectInput(nullptr),
+		mKeyboard(nullptr),
+		mMouse(nullptr)
     {
         mDepthStencilBufferEnabled = true;
         mMultiSamplingEnabled = true;
@@ -30,6 +35,18 @@ namespace Rendering
         mDemo = new TriangleDemo(*this, *mCamera);
         mComponents.push_back(mDemo);
 
+        if (FAILED(DirectInput8Create(mInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&mDirectInput, nullptr)))
+        {
+            throw GameException("DirectInput8Create() failed");
+        }
+        mKeyboard = new Keyboard(*this, mDirectInput);
+        mComponents.push_back(mKeyboard);
+        mServices.AddService(Keyboard::TypeIdClass(), mKeyboard);
+
+        mMouse = new Mouse(*this, mDirectInput);
+        mComponents.push_back(mMouse);
+        mServices.AddService(Mouse::TypeIdClass(), mMouse);
+
         Game::Initialize();
 
 		mCamera->SetPosition(0.0f, 0.0f, 5.0f);
@@ -46,6 +63,12 @@ namespace Rendering
     {
 
         Game::Update(gameTime);
+
+        if (mKeyboard->WasKeyPressedThisFrame(DIK_ESCAPE))
+        {
+            Exit();
+        }
+
     }
 
     void RenderingGame::Draw(const GameTime &gameTime)
