@@ -15,19 +15,22 @@ namespace Rendering
 {
     RTTI_DEFINITIONS(ModelFromFile)
 
-    ModelFromFile::ModelFromFile(Game& game, Camera& camera, const std::string modelFilename)
-        : DrawableGameComponent(game, camera),  
-          mEffect(nullptr), mTechnique(nullptr), mPass(nullptr), mWvpVariable(nullptr), mTextureShaderResourceView(nullptr), mColorTextureVariable(nullptr),
-          mInputLayout(nullptr), mWorldMatrix(MatrixHelper::Identity), mVertexBuffer(nullptr), mIndexBuffer(nullptr), mIndexCount(0), modelFile(modelFilename)
-    {
-		//we don't use the model description and model value for this constructor
-		mModelValue = 0;
-    }
-
-	ModelFromFile::ModelFromFile(Game& game, Camera& camera, const std::string modelFilename, const std::wstring ModelDes, int ModelValue)
+	ModelFromFile::ModelFromFile(Game& game, Camera& camera, const std::string modelFilename, const std::wstring ModelDes, int ModelValue, const std::wstring textureName)
 		: DrawableGameComponent(game, camera),
-		mEffect(nullptr), mTechnique(nullptr), mPass(nullptr), mWvpVariable(nullptr), mTextureShaderResourceView(nullptr), mColorTextureVariable(nullptr),
-		mInputLayout(nullptr), mWorldMatrix(MatrixHelper::Identity), mVertexBuffer(nullptr), mIndexBuffer(nullptr), mIndexCount(0), modelFile(modelFilename), modelDes(ModelDes), mModelValue(ModelValue) 
+		mEffect(nullptr), 
+        mTechnique(nullptr), 
+        mPass(nullptr), 
+        mWvpVariable(nullptr), 
+        mTextureShaderResourceView(nullptr), 
+        mColorTextureVariable(nullptr),
+		mInputLayout(nullptr), 
+        mWorldMatrix(MatrixHelper::Identity), 
+        mVertexBuffer(nullptr), mIndexBuffer(nullptr), 
+        mIndexCount(0), 
+        modelFile(modelFilename), 
+        modelDes(ModelDes), 
+        mModelValue(ModelValue), 
+        mTextureName(textureName)
 	{
 
 	}
@@ -148,15 +151,13 @@ namespace Rendering
         // Load the texture
        // std::wstring textureName = L"Content\\Textures\\EarthComposite.jpg";
 
-		std::wstring textureName = L"Content\\Textures\\bench.jpg";
+        std::wstring textureName = mTextureName;
         
 		
 		if (FAILED(hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &mTextureShaderResourceView)))
         {
             throw GameException("CreateWICTextureFromFile() failed.", hr);
         }
-
-		
 
 
         //position model in the world space, the issue here is that models are from different sources need adjustment for scaling, rotation,
@@ -201,9 +202,6 @@ namespace Rendering
 
 	//	XMStoreFloat4x4(&mWorldMatrix, worldMatrix);
 
-
-
-		
 	}
 
 
@@ -275,9 +273,7 @@ namespace Rendering
 		XMStoreFloat3(const_cast<XMFLOAT3*>(&mBoundingBox.Center),  0.5f*(vMin + vMax));
 		XMStoreFloat3(const_cast<XMFLOAT3*>(&mBoundingBox.Extents), 0.5f*(vMax - vMin));
 
-	
 
-		
         D3D11_BUFFER_DESC vertexBufferDesc;
         ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
         vertexBufferDesc.ByteWidth = sizeof(TextureMappingVertex) * vertices.size();

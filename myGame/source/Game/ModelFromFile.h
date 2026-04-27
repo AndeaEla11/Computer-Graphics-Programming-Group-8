@@ -18,8 +18,7 @@ namespace Rendering
 		RTTI_DECLARATIONS(ModelFromFile, DrawableGameComponent)
 
 	public:
-		ModelFromFile(Game& game, Camera& camera, const std::string modelFilename);
-		ModelFromFile(Game& game, Camera& camera, const std::string modelFilename, const std::wstring modelDes, int modelValue);
+		ModelFromFile(Game& game, Camera& camera, const std::string modelFilename, const std::wstring modelDes, int modelValue, const std::wstring textureName);
 		~ModelFromFile();
 
 		virtual void Update(const GameTime& gameTime) override;
@@ -43,23 +42,16 @@ namespace Rendering
 		virtual void Draw(const GameTime& gameTime) override;
 
 
-
-
-
-
 	private:
 		typedef struct _TextureMappingVertex
 		{
 			XMFLOAT4 Position;
 			XMFLOAT2 TextureCoordinates;
 
-			_TextureMappingVertex() { }
-
 			_TextureMappingVertex(XMFLOAT4 position, XMFLOAT2 textureCoordinates)
 				: Position(position), TextureCoordinates(textureCoordinates) { }
 		} TextureMappingVertex;
 
-		ModelFromFile();
 		ModelFromFile(const ModelFromFile& rhs);
 		ModelFromFile& operator=(const ModelFromFile& rhs);
 
@@ -85,8 +77,7 @@ namespace Rendering
 
 		std::wstring modelDes;
 		int mModelValue;
-		
-	
+		std::wstring mTextureName;
 
 	};
 }

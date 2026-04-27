@@ -60,11 +60,11 @@ namespace Rendering
 		mComponents.push_back(mMouse);
 		mServices.AddService(Mouse::TypeIdClass(), mMouse);
 		
-		mModel1 = new ModelFromFile(*this, *mCamera, "Content\\Models\\chicken_root.fbx", L"A Chicken",20);
+		mModel1 = new ModelFromFile(*this, *mCamera, "Content\\Models\\chicken_root.fbx", L"A Chicken",20, L"Content\\Textures\\chicken_color.jpg");
 		mModel1->SetPosition(0.0f, 1.0f, 0.0f, 0.001f, 0.0f, 0.4f, 0.0f);
 		mComponents.push_back(mModel1);
 
-		mModel2 = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10);
+		mModel2 = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10, L"Content\\Textures\\bench.jpg");
 		mModel2->SetPosition(-1.57f, 0.0f, 0.0f, 0.005f, 2.0f, 0.4f, 0.0f);
 		mComponents.push_back(mModel2);
 
