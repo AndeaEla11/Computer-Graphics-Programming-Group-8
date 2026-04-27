@@ -53,7 +53,8 @@ namespace Rendering
 		Mouse* mMouse;
 		ModelFromFile* mModel1;
 		ModelFromFile* mModel2;
-	
+		ModelFromFile* mModel3;
+
 		int mScore;
 		SpriteBatch* mSpriteBatch;
 		SpriteFont* mSpriteFont;

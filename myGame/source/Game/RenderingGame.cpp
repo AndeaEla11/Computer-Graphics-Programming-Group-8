@@ -24,7 +24,7 @@ namespace Rendering
 	RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
 		: Game(instance, windowClass, windowTitle, showCommand),
 		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr), mModel1(nullptr),
-		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr)
+		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr), mModel3(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr)
     {
         mDepthStencilBufferEnabled = true;
         mMultiSamplingEnabled = true;
@@ -61,12 +61,16 @@ namespace Rendering
 		mServices.AddService(Mouse::TypeIdClass(), mMouse);
 		
 		mModel1 = new ModelFromFile(*this, *mCamera, "Content\\Models\\chicken_root.fbx", L"A Chicken",20, L"Content\\Textures\\chicken_color.jpg");
-		mModel1->SetPosition(0.0f, 1.0f, 0.0f, 0.001f, 0.0f, 0.4f, 0.0f);
+		mModel1->SetPosition(0.0f, 2.7f, 0.0f, 0.001f, 0.0f, 0.4f, 0.0f);
 		mComponents.push_back(mModel1);
 
 		mModel2 = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10, L"Content\\Textures\\bench.jpg");
 		mModel2->SetPosition(-1.57f, 0.0f, 0.0f, 0.005f, 2.0f, 0.4f, 0.0f);
 		mComponents.push_back(mModel2);
+
+		mModel3 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Barn.fbx", L"A Barn", 10, L"Content\\Textures\\barn.jpg");
+		mModel3->SetPosition(-1.57f, 4.8f, 0.0f, 0.5f, -10.0f, 1.5f, .0f);
+		mComponents.push_back(mModel3);
 
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
@@ -100,6 +104,7 @@ namespace Rendering
 		
 		DeleteObject(mModel1);
 		DeleteObject(mModel2);
+		DeleteObject(mModel3);
 
 		DeleteObject(mFpsComponent);
 		DeleteObject(mRenderStateHelper);
@@ -132,10 +137,7 @@ namespace Rendering
 			
 			if (mModel1->Visible())
 			Pick(Game::screenX, Game::screenY, mModel1);
-	
-			if (mModel2->Visible())
-				Pick(Game::screenX, Game::screenY, mModel2);
-			
+
 			Game::toPick = false;
 		}
 

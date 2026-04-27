@@ -103,7 +103,7 @@ namespace Rendering
         variable = mEffect->GetVariableByName("ColorTexture");
         if (variable == nullptr)
         {
-            throw GameException("ID3DX11Effect::GetVariableByName() could not find the specified 				variable.", hr);
+            throw GameException("ID3DX11Effect::GetVariableByName() could not find the specified variable.", hr);
         }
         mColorTextureVariable = variable->AsShaderResource();
         if (mColorTextureVariable->IsValid() == false)
@@ -134,10 +134,10 @@ namespace Rendering
 		//insert code here
         TextureMappingVertex vertices[] =
         {
-            TextureMappingVertex(XMFLOAT4(-5.0f, 0.0f, 5.0f, 1.0f), XMFLOAT2(0.0f, 1.0f)),
-            TextureMappingVertex(XMFLOAT4(5.0f, 0.0f, 5.0f, 1.0f), XMFLOAT2(1.0f, 1.0f)),
-            TextureMappingVertex(XMFLOAT4(5.0f, 0.0f, -5.0f, 1.0f), XMFLOAT2(1.0f, 0.0f)),
-            TextureMappingVertex(XMFLOAT4(-5.0f, 0.0f, -5.0f, 1.0f), XMFLOAT2(0.0f, 0.0f)),
+            TextureMappingVertex(XMFLOAT4(-20.0f, 0.0f, 20.0f, 1.0f), XMFLOAT2(0.0f, 1.0f)),
+            TextureMappingVertex(XMFLOAT4(20.0f, 0.0f, 20.0f, 1.0f), XMFLOAT2(1.0f, 1.0f)),
+            TextureMappingVertex(XMFLOAT4(20.0f, 0.0f, -20.0f, 1.0f), XMFLOAT2(1.0f, 0.0f)),
+            TextureMappingVertex(XMFLOAT4(-20.0f, 0.0f, -20.0f, 1.0f), XMFLOAT2(0.0f, 0.0f)),
 
         };
 

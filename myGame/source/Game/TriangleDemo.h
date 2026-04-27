@@ -23,13 +23,13 @@ namespace Rendering
         {
             XMFLOAT4 Position;
             XMFLOAT2 TextureCoordinates;
-            _TextureMappingVertex() {}
+
             _TextureMappingVertex(XMFLOAT4 position, XMFLOAT2 textureCoordinates)
-                : Position(position), TextureCoordinates(textureCoordinates) {
+                : Position(position), TextureCoordinates(textureCoordinates) 
+            {
             }
         } TextureMappingVertex;
 
-        TriangleDemo();
         TriangleDemo(const TriangleDemo& rhs);
         TriangleDemo& operator=(const TriangleDemo& rhs);
 
