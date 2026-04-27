@@ -9,6 +9,8 @@
 #include "Mesh.h"
 #include <WICTextureLoader.h>
 
+using namespace DirectX;
+
 namespace Rendering
 {
     RTTI_DEFINITIONS(ModelFromFile)
@@ -18,7 +20,17 @@ namespace Rendering
           mEffect(nullptr), mTechnique(nullptr), mPass(nullptr), mWvpVariable(nullptr), mTextureShaderResourceView(nullptr), mColorTextureVariable(nullptr),
           mInputLayout(nullptr), mWorldMatrix(MatrixHelper::Identity), mVertexBuffer(nullptr), mIndexBuffer(nullptr), mIndexCount(0), modelFile(modelFilename)
     {
+		//we don't use the model description and model value for this constructor
+		mModelValue = 0;
     }
+
+	ModelFromFile::ModelFromFile(Game& game, Camera& camera, const std::string modelFilename, const std::wstring ModelDes, int ModelValue)
+		: DrawableGameComponent(game, camera),
+		mEffect(nullptr), mTechnique(nullptr), mPass(nullptr), mWvpVariable(nullptr), mTextureShaderResourceView(nullptr), mColorTextureVariable(nullptr),
+		mInputLayout(nullptr), mWorldMatrix(MatrixHelper::Identity), mVertexBuffer(nullptr), mIndexBuffer(nullptr), mIndexCount(0), modelFile(modelFilename), modelDes(ModelDes), mModelValue(ModelValue) 
+	{
+
+	}
 
     ModelFromFile::~ModelFromFile()
     {
@@ -33,18 +45,6 @@ namespace Rendering
         ReleaseObject(mIndexBuffer);
     }
 
-	void ModelFromFile::SetPosition(const float rotateX, const float rotateY, const 							float rotateZ, const float scaleFactor, const float 						translateX, const float translateY, const float translateZ)
-	{
-		XMMATRIX worldMatrix = XMLoadFloat4x4(&mWorldMatrix);
-		XMMATRIX RotationZ = XMMatrixRotationZ(rotateZ);
-		XMMATRIX RotationX = XMMatrixRotationX(rotateX);
-		XMMATRIX RotationY = XMMatrixRotationY(rotateY);
-		XMMATRIX Scale = XMMatrixScaling(scaleFactor, scaleFactor, scaleFactor);
-		XMMATRIX Translation = XMMatrixTranslation(translateX, translateY, translateZ);
-		worldMatrix = RotationZ * RotationX *RotationY* Scale * Translation;
-
-		XMStoreFloat4x4(&mWorldMatrix, worldMatrix);
-	}
 
 
     void ModelFromFile::Initialize()
@@ -66,7 +66,7 @@ namespace Rendering
 		
 		if (FAILED(hr))
 		{
-			const char* errorMessage = (errorMessages != nullptr ? (char*)errorMessages->GetBufferPointer() : "D3DX11CompileFromFile() failed");
+			char* errorMessage = (errorMessages != nullptr ? (char*)errorMessages->GetBufferPointer() : "D3DX11CompileFromFile() failed");
 			GameException ex(errorMessage, hr);
 			ReleaseObject(errorMessages);
 
@@ -144,16 +144,19 @@ namespace Rendering
         mIndexCount = mesh->Indices().size();
 
 		
+		
         // Load the texture
        // std::wstring textureName = L"Content\\Textures\\EarthComposite.jpg";
 
-		std::wstring textureName = L"Content\\Textures\\chicken_color.jpg";
+		std::wstring textureName = L"Content\\Textures\\bench.jpg";
         
 		
 		if (FAILED(hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &mTextureShaderResourceView)))
         {
             throw GameException("CreateWICTextureFromFile() failed.", hr);
         }
+
+		
 
 
         //position model in the world space, the issue here is that models are from different sources need adjustment for scaling, rotation,
@@ -170,6 +173,22 @@ namespace Rendering
 */
     }
 
+
+	void ModelFromFile::SetPosition(const float rotateX, const float rotateY, const float rotateZ, const float scaleFactor, const float translateX, const float translateY, const float translateZ)
+	{
+		XMMATRIX worldMatrix = XMLoadFloat4x4(&mWorldMatrix);
+		XMMATRIX RotationZ = XMMatrixRotationZ(rotateZ);
+		XMMATRIX RotationX = XMMatrixRotationX(rotateX);
+		XMMATRIX RotationY = XMMatrixRotationY(rotateY);
+		XMMATRIX Scale = XMMatrixScaling(scaleFactor, scaleFactor, scaleFactor);
+		XMMATRIX Translation = XMMatrixTranslation(translateX, translateY, translateZ);
+		worldMatrix = RotationZ*RotationX *RotationY* Scale * Translation;
+
+		XMStoreFloat4x4(&mWorldMatrix, worldMatrix);
+	}
+
+
+
 	void ModelFromFile::Update(const GameTime& gameTime)
 	{
 	//	XMMATRIX worldMatrix = XMLoadFloat4x4(&mWorldMatrix);
@@ -182,6 +201,9 @@ namespace Rendering
 
 	//	XMStoreFloat4x4(&mWorldMatrix, worldMatrix);
 
+
+
+		
 	}
 
 
@@ -217,14 +239,45 @@ namespace Rendering
         
         std::vector<XMFLOAT3>* textureCoordinates = mesh.TextureCoordinates().at(0);
         assert(textureCoordinates->size() == sourceVertices.size());
-            
+          
+
+		//generate the bounding box
+		float min = -1e38f;
+		float max = 1e38f;
+
+		XMFLOAT3 vMinf3(max, max, max);
+		XMFLOAT3 vMaxf3(min,min,min);
+
+
+		XMVECTOR vMin = XMLoadFloat3(&vMinf3);
+		XMVECTOR vMax = XMLoadFloat3(&vMaxf3);
+
+		//end
+
+
         for (UINT i = 0; i < sourceVertices.size(); i++)
         {
             XMFLOAT3 position = sourceVertices.at(i);
             XMFLOAT3 uv = textureCoordinates->at(i);
             vertices.push_back(TextureMappingVertex(XMFLOAT4(position.x, position.y, position.z, 1.0f), XMFLOAT2(uv.x, uv.y)));
-        }
 
+
+			//create the bounding box from the list of vertices
+			XMVECTOR P = XMLoadFloat3(&position);
+			vMin = XMVectorMin(vMin, P);
+			vMax = XMVectorMax(vMax, P);
+			//the end
+
+        }
+		
+	    //final step to generate the bounding box
+	
+		XMStoreFloat3(const_cast<XMFLOAT3*>(&mBoundingBox.Center),  0.5f*(vMin + vMax));
+		XMStoreFloat3(const_cast<XMFLOAT3*>(&mBoundingBox.Extents), 0.5f*(vMax - vMin));
+
+	
+
+		
         D3D11_BUFFER_DESC vertexBufferDesc;
         ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
         vertexBufferDesc.ByteWidth = sizeof(TextureMappingVertex) * vertices.size();
