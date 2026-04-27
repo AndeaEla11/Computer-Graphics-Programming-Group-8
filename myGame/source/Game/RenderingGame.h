@@ -54,6 +54,12 @@ namespace Rendering
 		ModelFromFile* mModel1;
 		ModelFromFile* mModel2;
 		ModelFromFile* mModel3;
+		ModelFromFile* mModel4;
+		ModelFromFile* mModel5;
+		ModelFromFile* mModel6;
+		ModelFromFile* mModel7;
+		ModelFromFile* mModel8;
+		ModelFromFile* mModel9;
 
 		int mScore;
 		SpriteBatch* mSpriteBatch;

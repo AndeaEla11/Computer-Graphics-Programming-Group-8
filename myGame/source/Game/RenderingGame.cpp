@@ -24,7 +24,7 @@ namespace Rendering
 	RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
 		: Game(instance, windowClass, windowTitle, showCommand),
 		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr), mModel1(nullptr),
-		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr), mModel3(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr)
+		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr), mModel3(nullptr), mModel4(nullptr), mModel5(nullptr), mModel6(nullptr), mModel7(nullptr), mModel8(nullptr), mModel9(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr)
     {
         mDepthStencilBufferEnabled = true;
         mMultiSamplingEnabled = true;
@@ -59,22 +59,64 @@ namespace Rendering
 		mMouse = new Mouse(*this, mDirectInput);
 		mComponents.push_back(mMouse);
 		mServices.AddService(Mouse::TypeIdClass(), mMouse);
+
+		//SetPosition(rotateX, rotateY, rotateZ, scale, translateX, translateY, translateZ);
 		
 		mModel1 = new ModelFromFile(*this, *mCamera, "Content\\Models\\chicken_root.fbx", L"A Chicken",20, L"Content\\Textures\\chicken_color.jpg");
 		mModel1->SetPosition(0.0f, 2.7f, 0.0f, 0.001f, 0.0f, 0.4f, 0.0f);
 		mComponents.push_back(mModel1);
 
 		mModel2 = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10, L"Content\\Textures\\bench.jpg");
-		mModel2->SetPosition(-1.57f, 0.0f, 0.0f, 0.005f, 2.0f, 0.4f, 0.0f);
+		mModel2->SetPosition(-1.57f, 0.0f, 0.0f, 0.007f, 5.8f, 0.4f, -8.0f);
 		mComponents.push_back(mModel2);
 
 		mModel3 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Barn.fbx", L"A Barn", 10, L"Content\\Textures\\barn.jpg");
-		mModel3->SetPosition(-1.57f, 4.8f, 0.0f, 0.5f, -10.0f, 1.5f, .0f);
+		mModel3->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, -10.0f, 2.1f, 9.0f);
 		mComponents.push_back(mModel3);
+
+		//mModel4 = new ModelFromFile(*this, *mCamera, "Content\\Models\\barn1.fbx", L"A barn1", 10, L"Content\\Textures\\barn1.jpg");
+		//mModel4->SetPosition(-1.57f, 9.4f, 0.0f, 0.8f, 10.0f, 2.0f, 9.0f);
+		//mComponents.push_back(mModel4);
+
+		mModel5 = new ModelFromFile(*this, *mCamera, "Content\\Models\\silo.fbx", L"A silo", 10, L"Content\\Textures\\silos.jpg");
+		mModel5->SetPosition(-1.57f, 9.4f, 0.0f, 0.5f, -15.0f, 4.5f, 15.0f);
+		mComponents.push_back(mModel5);
+
+		mModel6 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Haystack.fbx", L"A haystack", 10, L"Content\\Textures\\haystack.jpg");
+		mModel6->SetPosition(-1.57f, 9.4f, 0.0f, 1.0f, -15.0f, 1.0f, 5.0f);
+		mComponents.push_back(mModel6);
+
+		mModel7 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Baleofhay.fbx", L"A Baleofhay", 10, L"Content\\Textures\\Baleofhay.jpg");
+		mModel7->SetPosition(-1.57f, 9.4f, 0.0f, 1.0f, -6.0f, 1.0f, 6.0f);
+		mComponents.push_back(mModel7);
+
+		mModel8 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Baleofhay2.fbx", L"A Baleofhay2", 10, L"Content\\Textures\\Baleofhay2.jpg");
+		mModel8->SetPosition(-1.57f, 5.4f, 0.0f, 2.5f, -9.0f, 0.3f, -13.0f);
+		mComponents.push_back(mModel8);
+
+		mModel6 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Haystack.fbx", L"A haystack", 10, L"Content\\Textures\\haystack.jpg");
+		mModel6->SetPosition(-1.57f, 5.4f, 0.0f, 2.0f, -15.0f, 2.5f, -15.0f);
+		mComponents.push_back(mModel6);
+
+		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 12.0f, 0.0f, 12.0f);
+		mComponents.push_back(mModel9);
+
+		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 12.0f, 0.0f, 6.0f);
+		mComponents.push_back(mModel9);
+
+		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 6.0f);
+		mComponents.push_back(mModel9);
+
+		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 12.0f);
+		mComponents.push_back(mModel9);
 
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
-		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.01f, -1.0f, 1.7f, -2.5f);
+		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.02f, 11.0f, 3.4f, -16.0f);
 		mComponents.push_back(mObjectDiffuseLight);
 		RasterizerStates::Initialize(mDirect3DDevice);
 		SamplerStates::Initialize(mDirect3DDevice);
@@ -97,7 +139,6 @@ namespace Rendering
 		DeleteObject(mDemo);
         DeleteObject(mCamera);
 		
-		
 		DeleteObject(mKeyboard);
 		DeleteObject(mMouse);
 		ReleaseObject(mDirectInput);
@@ -105,6 +146,12 @@ namespace Rendering
 		DeleteObject(mModel1);
 		DeleteObject(mModel2);
 		DeleteObject(mModel3);
+		DeleteObject(mModel4);
+		DeleteObject(mModel5);
+		DeleteObject(mModel6); 
+		DeleteObject(mModel7);
+		DeleteObject(mModel8);
+		DeleteObject(mModel9);
 
 		DeleteObject(mFpsComponent);
 		DeleteObject(mRenderStateHelper);
