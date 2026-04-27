@@ -24,7 +24,7 @@ namespace Rendering
 	RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
 		: Game(instance, windowClass, windowTitle, showCommand),
 		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr), mModel1(nullptr),
-		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr)
+		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr)
     {
         mDepthStencilBufferEnabled = true;
         mMultiSamplingEnabled = true;
@@ -59,47 +59,36 @@ namespace Rendering
 		mMouse = new Mouse(*this, mDirectInput);
 		mComponents.push_back(mMouse);
 		mServices.AddService(Mouse::TypeIdClass(), mMouse);
-
-     
 		
-		mModel1 = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench",20);
-		mModel1->SetPosition(-1.57f, -0.0f, -0.0f, 0.005f, 0.0f, 0.4f, 0.0f);
+		mModel1 = new ModelFromFile(*this, *mCamera, "Content\\Models\\chicken_root.fbx", L"A Chicken",20);
+		mModel1->SetPosition(0.0f, 1.0f, 0.0f, 0.001f, 0.0f, 0.4f, 0.0f);
 		mComponents.push_back(mModel1);
 
-		mModel2 = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A tree", 10);
-		mModel2->SetPosition(-1.57f, -0.0f, -0.0f, 0.005f, 2.0f, 0.4f, 0.0f);
+		mModel2 = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10);
+		mModel2->SetPosition(-1.57f, 0.0f, 0.0f, 0.005f, 2.0f, 0.4f, 0.0f);
 		mComponents.push_back(mModel2);
-
 
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
-		mObjectDiffuseLight->SetPosition(-1.57f, -0.0f, -0.0f, 0.01f, -1.0f, 0.75f, -2.5f);
+		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.01f, -1.0f, 1.7f, -2.5f);
 		mComponents.push_back(mObjectDiffuseLight);
 		RasterizerStates::Initialize(mDirect3DDevice);
 		SamplerStates::Initialize(mDirect3DDevice);
-
 	
 		mFpsComponent = new FpsComponent(*this);
 		mFpsComponent->Initialize();
 		mRenderStateHelper = new RenderStateHelper(*this);
-		
-		
-
 
 		Game::Initialize();
 
+		mSpriteBatch = new SpriteBatch(mDirect3DDeviceContext);
+		mSpriteFont = new SpriteFont(mDirect3DDevice, L"Content\\Fonts\\Arial_14_Regular.spritefont");
+
         mCamera->SetPosition(0.0f, 1.0f, 10.0f);
-
-		
-
-
-
     }
 
     void RenderingGame::Shutdown()
     {
-		
-
 		
 		DeleteObject(mDemo);
         DeleteObject(mCamera);
@@ -110,13 +99,15 @@ namespace Rendering
 		ReleaseObject(mDirectInput);
 		
 		DeleteObject(mModel1);
-	
+		DeleteObject(mModel2);
 
 		DeleteObject(mFpsComponent);
 		DeleteObject(mRenderStateHelper);
 
 		DeleteObject(mObjectDiffuseLight);
 		
+		DeleteObject(mSpriteFont);
+		DeleteObject(mSpriteBatch);
 
         Game::Shutdown();
     }
@@ -150,7 +141,6 @@ namespace Rendering
 
 	}
 
-
 	// do the picking here
 
 	void RenderingGame::Pick(int sx, int sy, ModelFromFile* model)
@@ -171,11 +161,15 @@ namespace Rendering
 		// Tranform ray to local space of Mesh via the inverse of both of view and world transform
 		
 		XMMATRIX V = mCamera->ViewMatrix();
-		XMMATRIX invView = XMMatrixInverse(&XMMatrixDeterminant(V), V);
+
+		XMVECTOR viewDeterminant = XMMatrixDeterminant(V);
+		XMMATRIX invView = XMMatrixInverse(&viewDeterminant, V);
 
 		
 		XMMATRIX W = XMLoadFloat4x4(model->WorldMatrix());
-		XMMATRIX invWorld = XMMatrixInverse(&XMMatrixDeterminant(W), W);
+
+		XMVECTOR worldDeterminant = XMMatrixDeterminant(W);
+		XMMATRIX invWorld = XMMatrixInverse(&worldDeterminant, W);
 
 		XMMATRIX toLocal = XMMatrixMultiply(invView, invWorld);
 
@@ -184,8 +178,6 @@ namespace Rendering
 
 		// Make the ray direction unit length for the intersection tests.
 		rayDir =  XMVector3Normalize(rayDir);
-
-	
 	
 		float tmin = 0.0;
 		if (model->mBoundingBox.Intersects(rayOrigin, rayDir, tmin))
@@ -196,14 +188,16 @@ namespace Rendering
 			int result = MessageBox(0, pickupString.str().c_str(), L"Object Found", MB_ICONASTERISK | MB_YESNO);
 
 			if (result == IDYES)
-			{ 
+			{
+				//hide the object
 				model->SetVisible(false);
-			}
-		
+
+				//update the score
+				mScore += model->ModelValue();
+
+			}		
 		}
 	}
-
-	
 
     void RenderingGame::Draw(const GameTime &gameTime)
     {
@@ -214,7 +208,12 @@ namespace Rendering
 		mRenderStateHelper->SaveAll();
 		mFpsComponent->Draw(gameTime);
 		
-
+		mSpriteBatch->Begin();
+		//draw the score
+		std::wostringstream scoreLabel;
+		scoreLabel << L"Your current score: " << mScore << "\n";
+		mSpriteFont->DrawString(mSpriteBatch, scoreLabel.str().c_str(), XMFLOAT2(0.0f, 120.0f), Colors::Red);
+		mSpriteBatch->End();
 		
 		mRenderStateHelper->RestoreAll();
 

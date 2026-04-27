@@ -66,7 +66,7 @@ namespace Rendering
 		
 		if (FAILED(hr))
 		{
-			char* errorMessage = (errorMessages != nullptr ? (char*)errorMessages->GetBufferPointer() : "D3DX11CompileFromFile() failed");
+			const char* errorMessage = (errorMessages != nullptr ? (char*)errorMessages->GetBufferPointer() : "D3DX11CompileFromFile() failed");
 			GameException ex(errorMessage, hr);
 			ReleaseObject(errorMessages);
 

@@ -16,7 +16,11 @@ namespace Library
 
 }
 
-
+namespace DirectX
+{
+	class SpriteBatch;
+	class SpriteFont;
+}
 
 namespace Rendering
 {
@@ -34,7 +38,6 @@ namespace Rendering
         virtual void Update(const GameTime& gameTime) override;
         virtual void Draw(const GameTime& gameTime) override;
 
-
 	protected:
         virtual void Shutdown() override;
 
@@ -51,6 +54,9 @@ namespace Rendering
 		ModelFromFile* mModel1;
 		ModelFromFile* mModel2;
 	
+		int mScore;
+		SpriteBatch* mSpriteBatch;
+		SpriteFont* mSpriteFont;
 
 		FpsComponent* mFpsComponent;
 		RenderStateHelper* mRenderStateHelper;
