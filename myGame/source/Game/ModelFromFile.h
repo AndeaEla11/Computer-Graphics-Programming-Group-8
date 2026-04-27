@@ -26,7 +26,6 @@ namespace Rendering
 		void SetPosition(const float rotateX, const float rotateY, const float rotateZ, const float scaleFactor, const float translateX, const float translateY, const float translateZ);
 		
 
-		
 		virtual void Initialize() override;
 		virtual void Draw(const GameTime& gameTime) override;
 

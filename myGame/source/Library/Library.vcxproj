@@ -139,8 +139,10 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BasicMaterial.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="DrawableGameComponent.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="FirstPersonCamera.h" />
@@ -151,6 +153,7 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"
     <ClInclude Include="GameException.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MatrixHelper.h" />
     <ClInclude Include="Mesh.h" />
@@ -158,8 +161,11 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"
     <ClInclude Include="ModelMaterial.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Pass.h" />
+    <ClInclude Include="ProxyModel.h" />
+    <ClInclude Include="RasterizerStates.h" />
     <ClInclude Include="RenderStateHelper.h" />
     <ClInclude Include="RTTI.h" />
+    <ClInclude Include="SamplerStates.h" />
     <ClInclude Include="ServiceContainer.h" />
     <ClInclude Include="Technique.h" />
     <ClInclude Include="Utility.h" />
@@ -167,7 +173,9 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"
     <ClInclude Include="VectorHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BasicMaterial.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="DrawableGameComponent.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
@@ -178,6 +186,7 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"
     <ClCompile Include="GameException.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MatrixHelper.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -185,7 +194,10 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"
     <ClCompile Include="ModelMaterial.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Pass.cpp" />
+    <ClCompile Include="ProxyModel.cpp" />
+    <ClCompile Include="RasterizerStates.cpp" />
     <ClCompile Include="RenderStateHelper.cpp" />
+    <ClCompile Include="SamplerStates.cpp" />
     <ClCompile Include="ServiceContainer.cpp" />
     <ClCompile Include="Technique.cpp" />
     <ClCompile Include="Utility.cpp" />

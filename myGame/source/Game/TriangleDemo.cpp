@@ -135,8 +135,8 @@ namespace Rendering
         TextureMappingVertex vertices[] =
         {
             TextureMappingVertex(XMFLOAT4(-5.0f, 0.0f, 5.0f, 1.0f), XMFLOAT2(0.0f, 1.0f)),
-            TextureMappingVertex(XMFLOAT4(+5.0f, 0.0f, 5.0f, 1.0f), XMFLOAT2(1.0f, 1.0f)),
-            TextureMappingVertex(XMFLOAT4(+5.0f, 0.0f, -5.0f, 1.0f), XMFLOAT2(1.0f, 0.0f)),
+            TextureMappingVertex(XMFLOAT4(5.0f, 0.0f, 5.0f, 1.0f), XMFLOAT2(1.0f, 1.0f)),
+            TextureMappingVertex(XMFLOAT4(5.0f, 0.0f, -5.0f, 1.0f), XMFLOAT2(1.0f, 0.0f)),
             TextureMappingVertex(XMFLOAT4(-5.0f, 0.0f, -5.0f, 1.0f), XMFLOAT2(0.0f, 0.0f)),
 
         };

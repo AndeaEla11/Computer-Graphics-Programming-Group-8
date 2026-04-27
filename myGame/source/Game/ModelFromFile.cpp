@@ -147,15 +147,13 @@ namespace Rendering
         // Load the texture
        // std::wstring textureName = L"Content\\Textures\\EarthComposite.jpg";
 
-		std::wstring textureName = L"Content\\Textures\\bench.jpg";
+		std::wstring textureName = L"Content\\Textures\\chicken_color.jpg";
         
 		
 		if (FAILED(hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &mTextureShaderResourceView)))
         {
             throw GameException("CreateWICTextureFromFile() failed.", hr);
         }
-
-
 
 
         //position model in the world space, the issue here is that models are from different sources need adjustment for scaling, rotation,
