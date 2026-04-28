@@ -431,3 +431,12 @@ FodyWeavers.xsd
 # Allow assimp dll
 !external/assimp/bin/assimp_release-dll_win32/*.dll
 !myGame/*.dll
+
+# Allow DirectXTK built files
+!external/DirectXTK/bin/
+!external/DirectXTK/bin/**
+
+!external/DirectXTK/lib/
+!external/DirectXTK/lib/**
+!external/DirectXTK/source/Bin/
+!external/DirectXTK/source/Bin/**
