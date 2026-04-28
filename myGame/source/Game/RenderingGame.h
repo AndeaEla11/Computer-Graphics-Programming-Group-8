@@ -13,7 +13,7 @@ namespace Library
 	class Keyboard;
 	class Mouse;
 	class FpsComponent;
-
+	
 }
 
 namespace DirectX
@@ -42,10 +42,21 @@ namespace Rendering
         virtual void Shutdown() override;
 
     private:
+		enum class GameState {
+			Menu,
+			Playing,
+			Paused,
+			Quit
+		};
+
+		GameState mCurrentState = GameState::Menu;
 		static const XMFLOAT4 BackgroundColor;
         FirstPersonCamera * mCamera;
         TriangleDemo* mDemo;
-
+		RECT mStartButtonRect;
+		RECT mQuitButtonRect;
+		ID3D11ShaderResourceView* mMainMenuTexture;
+		
 		//Define member variables for Keyboard and mouse
 		LPDIRECTINPUT8 mDirectInput;
 
