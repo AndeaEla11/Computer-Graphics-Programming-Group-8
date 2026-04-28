@@ -37,6 +37,7 @@ namespace Rendering
         virtual void Initialize() override;		
         virtual void Update(const GameTime& gameTime) override;
         virtual void Draw(const GameTime& gameTime) override;
+		virtual void ResetGame();
 
 	protected:
         virtual void Shutdown() override;
@@ -51,7 +52,6 @@ namespace Rendering
 
 		Keyboard* mKeyboard;
 		Mouse* mMouse;
-		ModelFromFile* mModel1;
 		ModelFromFile* mModel2;
 		ModelFromFile* mModel3;
 		ModelFromFile* mModel4;
@@ -72,8 +72,6 @@ namespace Rendering
 
 		void Pick(int sx, int sy, ModelFromFile*);
 
-		DirectX::XMFLOAT3 mChickenPosition;
-		DirectX::XMFLOAT3 mChickenDirection;
 		float mChickenSpeed;
 		bool mchickenAutoMove;
 		float mChangeDirectionTimer;
@@ -83,5 +81,12 @@ namespace Rendering
 		float mChickenAreaMaxX;
 		float mChickenAreaMinZ;
 		float mChickenAreaMaxZ;
+
+		std::vector<ModelFromFile*> mChickens;
+		std::vector<XMFLOAT3> mChickenPositions;
+		std::vector<XMFLOAT3> mChickenDirections;
+
+		int mWinScore = 100;
+		bool mGameWon = false;
     };
 }

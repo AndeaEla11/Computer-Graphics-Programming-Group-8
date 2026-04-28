@@ -30,13 +30,11 @@ namespace Rendering
 
 	RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
 		: Game(instance, windowClass, windowTitle, showCommand),
-		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr), mModel1(nullptr),
+		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr),
 		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), 
 		mModel2(nullptr), mModel3(nullptr), mModel4(nullptr), mModel5(nullptr), mModel7(nullptr), 
 		mModel8(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr),
 		
-		mChickenPosition(XMFLOAT3(0.0f, 0.4f, 0.0f)),
-		mChickenDirection(XMFLOAT3(1.0f, 0.0f, 0.0f)),
 		mChickenSpeed(5.0f),
 		mchickenAutoMove(true),
 		mChangeDirectionTimer(0.0f),
@@ -83,9 +81,21 @@ namespace Rendering
 
 		//SetPosition(rotateX, rotateY, rotateZ, scale, translateX, translateY, translateZ);
 		
-		mModel1 = new ModelFromFile(*this, *mCamera, "Content\\Models\\chicken_root.fbx", L"A Chicken",20, L"Content\\Textures\\chicken_color.jpg");
-		mModel1->SetPosition(0.0f, 2.7f, 0.0f, 0.001f, 0.0f, 0.4f, 0.0f);
-		mComponents.push_back(mModel1);
+		for (int i = 0; i < 5; i++)
+		{
+			ModelFromFile* chicken = new ModelFromFile(*this,*mCamera,"Content\\Models\\chicken_root.fbx",L"A Chicken",20,L"Content\\Textures\\chicken_color.jpg");
+
+			float x = -10.0f + (i * 5.0f);
+			float z = -5.0f + (i * 2.0f);
+
+			chicken->SetPosition(0.0f, 2.7f, 0.0f, 0.001f, x, 0.4f, z);
+
+			mChickens.push_back(chicken);
+			mChickenPositions.push_back(XMFLOAT3(x, 0.4f, z));
+			mChickenDirections.push_back(XMFLOAT3(1.0f, 0.0f, 0.0f));
+
+			mComponents.push_back(chicken);
+		}
 
 		ModelFromFile* model = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10, L"Content\\Textures\\bench.jpg");
 		model->SetPosition(-1.57f, 3.13f, 0.0f, 0.007f, 12.0f, 0.6f, -3.9f);
@@ -466,7 +476,7 @@ namespace Rendering
 
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
-		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.03f, 9.0f,  5.5f, -14.0f);
+		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.03f, 9.0f,  5.0f, -14.0f);
 		mComponents.push_back(mObjectDiffuseLight);
 		RasterizerStates::Initialize(mDirect3DDevice);
 		SamplerStates::Initialize(mDirect3DDevice);
@@ -493,7 +503,6 @@ namespace Rendering
 		DeleteObject(mMouse);
 		ReleaseObject(mDirectInput);
 		
-		DeleteObject(mModel1);
 		DeleteObject(mModel2);
 		DeleteObject(mModel3);
 		DeleteObject(mModel4);
@@ -509,11 +518,18 @@ namespace Rendering
 		DeleteObject(mSpriteFont);
 		DeleteObject(mSpriteBatch);
 
+		for (int i = 0; i < mChickens.size(); i++)
+		{
+			DeleteObject(mChickens[i]);
+		}
+
+		mChickens.clear();
+
         Game::Shutdown();
     }
 
-    void RenderingGame::Update(const GameTime &gameTime)
-    {
+	void RenderingGame::Update(const GameTime& gameTime)
+	{
 		Model* mChicken;
 		Vector3 mChickenPositionLocal;
 
@@ -522,40 +538,64 @@ namespace Rendering
 		float dt = static_cast<float>(gameTime.ElapsedGameTime());
 		Vector3 movement = Vector3(0.0f, 0.0f, 0.0f);
 
-		if (mchickenAutoMove && mModel1 != nullptr)
+		if (mchickenAutoMove)
 		{
 			mChangeDirectionTimer += dt;
+
 			if (mChangeDirectionTimer >= mChangeDirectionInterval)
 			{
-				const float twoPi = XM_2PI;
-				float t = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
-				float angle = t * twoPi;
-				mChickenDirection.x = std::cos(angle);
-				mChickenDirection.y = 0.0f;
-				mChickenDirection.z = std::sin(angle);
+				for (int i = 0; i < mChickens.size(); i++)
+				{
+					float t = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
+					float angle = t * XM_2PI;
+
+					mChickenDirections[i].x = std::cos(angle);
+					mChickenDirections[i].y = 0.0f;
+					mChickenDirections[i].z = std::sin(angle);
+				}
 
 				mChangeDirectionTimer = 0.0f;
-				float jitter = (static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f) * 0.8f;
-				mChangeDirectionInterval = (std::max)(0.5f, 2.0f + jitter);
+				mChangeDirectionInterval = 1.0f;
 			}
-			mChickenPosition.x += mChickenDirection.x * mChickenSpeed * dt;
-			mChickenPosition.z += mChickenDirection.z * mChickenSpeed * dt;
 
-			if (mChickenPosition.z < mChickenAreaMinZ)
+			for (int i = 0; i < mChickens.size(); i++)
 			{
-				mChickenPosition.z = mChickenAreaMinZ;
-				mChickenDirection.z = -mChickenDirection.z;
+				if (mChickens[i]->Visible())
+				{
+					mChickenPositions[i].x += mChickenDirections[i].x * mChickenSpeed * dt;
+					mChickenPositions[i].z += mChickenDirections[i].z * mChickenSpeed * dt;
+
+					if (mChickenPositions[i].x < mChickenAreaMinX)
+					{
+						mChickenPositions[i].x = mChickenAreaMinX;
+						mChickenDirections[i].x = -mChickenDirections[i].x;
+					}
+
+					if (mChickenPositions[i].x > mChickenAreaMaxX)
+					{
+						mChickenPositions[i].x = mChickenAreaMaxX;
+						mChickenDirections[i].x = -mChickenDirections[i].x;
+					}
+
+					if (mChickenPositions[i].z < mChickenAreaMinZ)
+					{
+						mChickenPositions[i].z = mChickenAreaMinZ;
+						mChickenDirections[i].z = -mChickenDirections[i].z;
+					}
+
+					if (mChickenPositions[i].z > mChickenAreaMaxZ)
+					{
+						mChickenPositions[i].z = mChickenAreaMaxZ;
+						mChickenDirections[i].z = -mChickenDirections[i].z;
+					}
+
+					XMMATRIX W = XMLoadFloat4x4(mChickens[i]->WorldMatrix());
+					W.r[3] = XMVectorSet(mChickenPositions[i].x, mChickenPositions[i].y, mChickenPositions[i].z, 1.0f);
+					XMStoreFloat4x4(mChickens[i]->WorldMatrix(), W);
+				}
 			}
-			else if (mChickenPosition.z > mChickenAreaMaxZ)
-			{
-				mChickenPosition.z = mChickenAreaMaxZ;
-				mChickenDirection.z = -mChickenDirection.z;
-			}
-			XMMATRIX W = XMLoadFloat4x4(mModel1->WorldMatrix());
-			W.r[3] = XMVectorSet(mChickenPosition.x, mChickenPosition.y, mChickenPosition.z, 1.0f);
-			XMStoreFloat4x4(mModel1->WorldMatrix(), W);
 		}
-		
+
 
 		//Add "ESC" to exit the application
 		if (mKeyboard->WasKeyPressedThisFrame(DIK_ESCAPE))
@@ -568,10 +608,31 @@ namespace Rendering
 		if (Game::toPick)
 		{
 			
-			if (mModel1->Visible())
-			Pick(Game::screenX, Game::screenY, mModel1);
+			for (int i = 0; i < mChickens.size(); i++)
+			{
+				if (mChickens[i]->Visible())
+				{
+					Pick(Game::screenX, Game::screenY, mChickens[i]);
+				}
+			}
 
 			Game::toPick = false;
+		}
+
+		if (!mGameWon && mScore >= mWinScore)
+		{
+			mGameWon = true;
+
+			int result = MessageBox(0, L"You won! Play again?", L"Game Over", MB_YESNO);
+
+			if (result == IDYES)
+			{
+				ResetGame();
+			}
+			else
+			{
+				Exit();
+			}
 		}
 
 	}
@@ -634,6 +695,7 @@ namespace Rendering
 		}
 	}
 
+
     void RenderingGame::Draw(const GameTime &gameTime)
     {
         mDirect3DDeviceContext->ClearRenderTargetView(mRenderTargetView, reinterpret_cast<const float*>(&BackgroundColor));
@@ -659,8 +721,28 @@ namespace Rendering
             throw GameException("IDXGISwapChain::Present() failed.", hr);
         }
 
-
-		
-
     }
+
+	void RenderingGame::ResetGame()
+	{
+		mScore = 0;
+		mGameWon = false;
+
+		for (int i = 0; i < mChickens.size(); i++)
+		{
+			mChickens[i]->SetVisible(true);
+
+			mChickenPositions[i].x = -10.0f + (i * 5.0f);
+			mChickenPositions[i].z = -5.0f + (i * 2.0f);
+
+			XMMATRIX W = XMLoadFloat4x4(mChickens[i]->WorldMatrix());
+			W.r[3] = XMVectorSet(
+				mChickenPositions[i].x,
+				mChickenPositions[i].y,
+				mChickenPositions[i].z,
+				1.0f
+			);
+			XMStoreFloat4x4(mChickens[i]->WorldMatrix(), W);
+		}
+	}
 }
