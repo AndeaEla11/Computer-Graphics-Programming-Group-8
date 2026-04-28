@@ -163,55 +163,55 @@ namespace Rendering
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, -1.8f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, -1.8f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, -0.51f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, -0.51f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 0.78f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 0.78f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 2.07f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 2.07f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 3.36f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 3.36f);
 		mComponents.push_back(model);	
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 4.65f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 4.65f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 5.94f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 5.94f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 7.23);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 7.23f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 8.52f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 8.52f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 9.81f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 9.81f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 11.1f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 11.1f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 12.39f);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 12.39f);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
-		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 13.68);
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, 15.0f, 0.0f, 13.68);
 		mComponents.push_back(model);
 
 		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
@@ -442,9 +442,10 @@ namespace Rendering
 		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -22.0f);
 		mComponents.push_back(model);
 
+
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
-		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.03f, 11.0f, 3.4f, -16.0f);
+		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.03f, 9.0f,  5.5f, -14.0f);
 		mComponents.push_back(mObjectDiffuseLight);
 		RasterizerStates::Initialize(mDirect3DDevice);
 		SamplerStates::Initialize(mDirect3DDevice);
