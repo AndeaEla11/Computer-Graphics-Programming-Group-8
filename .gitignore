@@ -441,5 +441,12 @@ FodyWeavers.xsd
 !external/DirectXTK/source/Bin/
 !external/DirectXTK/source/Bin/**
 
+# Allow models and textures
+!myGame/content/**/*.fbx
+!myGame/content/**/*.png
+!myGame/content/**/*.jpg
+!myGame/content/**/*.jpeg
+!myGame/content/**/*.dds
+
 # Remove large build cache files
 *.pch
