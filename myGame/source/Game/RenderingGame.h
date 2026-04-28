@@ -56,10 +56,10 @@ namespace Rendering
 		ModelFromFile* mModel3;
 		ModelFromFile* mModel4;
 		ModelFromFile* mModel5;
-		ModelFromFile* mModel6;
 		ModelFromFile* mModel7;
 		ModelFromFile* mModel8;
-		ModelFromFile* mModel9;
+
+		std::vector<ModelFromFile*> mModels;
 
 		int mScore;
 		SpriteBatch* mSpriteBatch;
@@ -71,8 +71,5 @@ namespace Rendering
 		ObjectDiffuseLight* mObjectDiffuseLight;
 
 		void Pick(int sx, int sy, ModelFromFile*);
-
-	
-
     };
 }

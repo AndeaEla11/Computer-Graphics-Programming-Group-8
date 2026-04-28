@@ -24,7 +24,7 @@ namespace Rendering
 	RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
 		: Game(instance, windowClass, windowTitle, showCommand),
 		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr), mModel1(nullptr),
-		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr), mModel3(nullptr), mModel4(nullptr), mModel5(nullptr), mModel6(nullptr), mModel7(nullptr), mModel8(nullptr), mModel9(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr)
+		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr), mModel3(nullptr), mModel4(nullptr), mModel5(nullptr), mModel7(nullptr), mModel8(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr)
     {
         mDepthStencilBufferEnabled = true;
         mMultiSamplingEnabled = true;
@@ -66,25 +66,29 @@ namespace Rendering
 		mModel1->SetPosition(0.0f, 2.7f, 0.0f, 0.001f, 0.0f, 0.4f, 0.0f);
 		mComponents.push_back(mModel1);
 
-		mModel2 = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10, L"Content\\Textures\\bench.jpg");
-		mModel2->SetPosition(-1.57f, 0.0f, 0.0f, 0.007f, 5.8f, 0.4f, -8.0f);
-		mComponents.push_back(mModel2);
+		ModelFromFile* model = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10, L"Content\\Textures\\bench.jpg");
+		model->SetPosition(-1.57f, 3.13f, 0.0f, 0.007f, 12.0f, 0.6f, -3.9f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10, L"Content\\Textures\\bench.jpg");
+		model->SetPosition(-1.57f, 3.13f, 0.0f, 0.007f, 6.0f, 0.6f, -3.9f);
+		mComponents.push_back(model);
 
 		mModel3 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Barn.fbx", L"A Barn", 10, L"Content\\Textures\\barn.jpg");
-		mModel3->SetPosition(-1.57f, 0.0f, 0.0f, 0.7f, -10.0f, 2.1f, 9.0f);
+		mModel3->SetPosition(-1.57f, 3.13f, 0.0f, 0.7f, -10.0f, 2.1f, 9.0f);
 		mComponents.push_back(mModel3);
-
-		//mModel4 = new ModelFromFile(*this, *mCamera, "Content\\Models\\barn1.fbx", L"A barn1", 10, L"Content\\Textures\\barn1.jpg");
-		//mModel4->SetPosition(-1.57f, 9.4f, 0.0f, 0.8f, 10.0f, 2.0f, 9.0f);
-		//mComponents.push_back(mModel4);
 
 		mModel5 = new ModelFromFile(*this, *mCamera, "Content\\Models\\silo.fbx", L"A silo", 10, L"Content\\Textures\\silos.jpg");
 		mModel5->SetPosition(-1.57f, 9.4f, 0.0f, 0.5f, -15.0f, 4.5f, 15.0f);
 		mComponents.push_back(mModel5);
 
-		mModel6 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Haystack.fbx", L"A haystack", 10, L"Content\\Textures\\haystack.jpg");
-		mModel6->SetPosition(-1.57f, 9.4f, 0.0f, 1.0f, -15.0f, 1.0f, 5.0f);
-		mComponents.push_back(mModel6);
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Haystack.fbx", L"A haystack", 10, L"Content\\Textures\\haystack.jpg");
+		model->SetPosition(-1.57f, 9.4f, 0.0f, 1.0f, -15.0f, 1.0f, 5.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Haystack.fbx", L"A haystack", 10, L"Content\\Textures\\haystack.jpg");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 2.0f, -15.0f, 2.5f, -15.0f);
+		mComponents.push_back(model);
 
 		mModel7 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Baleofhay.fbx", L"A Baleofhay", 10, L"Content\\Textures\\Baleofhay.jpg");
 		mModel7->SetPosition(-1.57f, 9.4f, 0.0f, 1.0f, -6.0f, 1.0f, 6.0f);
@@ -94,33 +98,121 @@ namespace Rendering
 		mModel8->SetPosition(-1.57f, 5.4f, 0.0f, 2.5f, -9.0f, 0.3f, -13.0f);
 		mComponents.push_back(mModel8);
 
-		mModel6 = new ModelFromFile(*this, *mCamera, "Content\\Models\\Haystack.fbx", L"A haystack", 10, L"Content\\Textures\\haystack.jpg");
-		mModel6->SetPosition(-1.57f, 5.4f, 0.0f, 2.0f, -15.0f, 2.5f, -15.0f);
-		mComponents.push_back(mModel6);
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 12.0f, 0.0f, 12.0f);
+		mComponents.push_back(model);
 
-		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
-		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 12.0f, 0.0f, 12.0f);
-		mComponents.push_back(mModel9);
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 12.0f, 0.0f, 6.0f);
+		mComponents.push_back(model);
+		
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 6.0f);
+		mComponents.push_back(model);
 
-		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
-		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 12.0f, 0.0f, 6.0f);
-		mComponents.push_back(mModel9);
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 12.0f);
+		mComponents.push_back(model);
 
-		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
-		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 6.0f);
-		mComponents.push_back(mModel9);
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 0.0f);
+		mComponents.push_back(model);
 
-		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
-		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 12.0f);
-		mComponents.push_back(mModel9);
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		model->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 12.0f, 0.0f, 0.0f);
+		mComponents.push_back(model);
 
-		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
-		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 3.0f, 0.0f, 3.0f);
-		mComponents.push_back(mModel9);
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 15.0f, 0.0f, -3.0f);
+		mComponents.push_back(model); 
 
-		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
-		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 3.0f);
-		mComponents.push_back(mModel9);
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");	
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 13.65f, 0.0f, -3.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 12.3f, 0.0f, -3.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 10.95f, 0.0f, -3.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 9.6f, 0.0f, -3.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 8.25, 0.0f, -3.0f);
+		mComponents.push_back(model);	
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 6.9f, 0.0f, -3.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 5.5f, 0.0f, -3.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 1.58f, 0.0f, 0.7f, 4.2f, 0.0f, -3.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, -3.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, -1.8f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, -0.51f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 0.78f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 2.07f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 3.36f);
+		mComponents.push_back(model);	
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 4.65f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 5.94f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 7.23);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 8.52f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 9.81f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 11.1f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 12.39f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\fence.fbx", L"A Fence", 10, L"Content\\Textures\\fence.jpg");
+		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 13.68);
+		mComponents.push_back(model);
 
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
@@ -156,10 +248,8 @@ namespace Rendering
 		DeleteObject(mModel3);
 		DeleteObject(mModel4);
 		DeleteObject(mModel5);
-		DeleteObject(mModel6); 
 		DeleteObject(mModel7);
 		DeleteObject(mModel8);
-		DeleteObject(mModel9);
 
 		DeleteObject(mFpsComponent);
 		DeleteObject(mRenderStateHelper);
