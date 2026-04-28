@@ -440,3 +440,6 @@ FodyWeavers.xsd
 !external/DirectXTK/lib/**
 !external/DirectXTK/source/Bin/
 !external/DirectXTK/source/Bin/**
+
+# Remove large build cache files
+*.pch
