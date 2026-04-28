@@ -138,7 +138,6 @@ namespace Rendering
             TextureMappingVertex(XMFLOAT4(20.0f, 0.0f, 20.0f, 1.0f), XMFLOAT2(1.0f, 1.0f)),
             TextureMappingVertex(XMFLOAT4(20.0f, 0.0f, -20.0f, 1.0f), XMFLOAT2(1.0f, 0.0f)),
             TextureMappingVertex(XMFLOAT4(-20.0f, 0.0f, -20.0f, 1.0f), XMFLOAT2(0.0f, 0.0f)),
-
         };
 
         D3D11_BUFFER_DESC vertexBufferDesc;

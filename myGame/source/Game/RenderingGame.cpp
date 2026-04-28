@@ -214,9 +214,237 @@ namespace Rendering
 		model->SetPosition(-1.57f, 3.15f, 0.0f, 0.7f, 2.9f, 0.0f, 13.68);
 		mComponents.push_back(model);
 
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, -13.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, -16.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, -19.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, -4.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, -7.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, -10.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, -1.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, 2.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, 5.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, 8.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, 11.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, 14.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, 17.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -17.0f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -14.1f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -11.2f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -8.3f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -5.4f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -2.5f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 0.4f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 3.3f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 6.2f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 9.1f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 12.0f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 14.9f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 17.8f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, 20.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, 17.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, 14.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, 11.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -13.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -16.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -19.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -4.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -7.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -10.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -1.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, 2.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, 5.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, 8.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -20.0f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -17.0f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -14.1f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -11.2f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -8.3f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -5.4f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, -2.5f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 0.4f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 3.3f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 6.2f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 9.1f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 12.0f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 14.9f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 17.8f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
+		model = new ModelFromFile(*this, *mCamera, "Content\\Models\\Tree_temp_climate_004.fbx", L"A tree", 10, L"Content\\Textures\\T_Trees_temp_climate.png");
+		model->SetPosition(-1.57f, 5.4f, 0.0f, 0.02f, 20.7f, -4.0f, -22.0f);
+		mComponents.push_back(model);
+
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
-		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.02f, 11.0f, 3.4f, -16.0f);
+		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.03f, 11.0f, 3.4f, -16.0f);
 		mComponents.push_back(mObjectDiffuseLight);
 		RasterizerStates::Initialize(mDirect3DDevice);
 		SamplerStates::Initialize(mDirect3DDevice);
