@@ -416,3 +416,18 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# === Allow required files for coursework ===
+
+!myGame/content/
+!myGame/content/**
+!myGame/content/**/*.obj
+
+# Allow Effects11 libs
+!external/Effects11/lib/
+!external/Effects11/lib/x86/
+!external/Effects11/lib/x86/*.lib
+
+# Allow assimp dll
+!external/assimp/bin/assimp_release-dll_win32/*.dll
+!myGame/*.dll
