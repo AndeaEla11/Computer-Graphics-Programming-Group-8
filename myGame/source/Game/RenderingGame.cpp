@@ -114,6 +114,14 @@ namespace Rendering
 		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 12.0f);
 		mComponents.push_back(mModel9);
 
+		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 3.0f, 0.0f, 3.0f);
+		mComponents.push_back(mModel9);
+
+		mModel9 = new ModelFromFile(*this, *mCamera, "Content\\Models\\dirt1.fbx", L"A dirt", 10, L"Content\\Textures\\dirt1.png");
+		mModel9->SetPosition(-1.57f, 0.0f, 0.0f, 2.0f, 6.0f, 0.0f, 3.0f);
+		mComponents.push_back(mModel9);
+
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
 		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.02f, 11.0f, 3.4f, -16.0f);
