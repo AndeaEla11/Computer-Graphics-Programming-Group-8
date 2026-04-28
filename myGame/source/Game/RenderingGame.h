@@ -71,5 +71,17 @@ namespace Rendering
 		ObjectDiffuseLight* mObjectDiffuseLight;
 
 		void Pick(int sx, int sy, ModelFromFile*);
+
+		DirectX::XMFLOAT3 mChickenPosition;
+		DirectX::XMFLOAT3 mChickenDirection;
+		float mChickenSpeed;
+		bool mchickenAutoMove;
+		float mChangeDirectionTimer;
+		float mChangeDirectionInterval;
+
+		float mChickenAreaMinX;
+		float mChickenAreaMaxX;
+		float mChickenAreaMinZ;
+		float mChickenAreaMaxZ;
     };
 }

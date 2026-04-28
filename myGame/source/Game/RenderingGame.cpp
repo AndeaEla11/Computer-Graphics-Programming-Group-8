@@ -11,10 +11,17 @@
 #include "ObjectDiffuseLight.h"
 #include "SamplerStates.h"
 #include "RasterizerStates.h"
+#include <algorithm>
+#include "Model.h"
+#define NOMINMAX
 
 //display score
 #include <SpriteFont.h>
 #include <sstream>
+
+#include <DirectXMath.h>
+using namespace DirectX;
+typedef DirectX::XMFLOAT3 Vector3;
 
 namespace Rendering
 {;
@@ -24,7 +31,21 @@ namespace Rendering
 	RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
 		: Game(instance, windowClass, windowTitle, showCommand),
 		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr), mModel1(nullptr),
-		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), mModel2(nullptr), mModel3(nullptr), mModel4(nullptr), mModel5(nullptr), mModel7(nullptr), mModel8(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr)
+		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr), 
+		mModel2(nullptr), mModel3(nullptr), mModel4(nullptr), mModel5(nullptr), mModel7(nullptr), 
+		mModel8(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr),
+		
+		mChickenPosition(XMFLOAT3(0.0f, 0.4f, 0.0f)),
+		mChickenDirection(XMFLOAT3(1.0f, 0.0f, 0.0f)),
+		mChickenSpeed(5.0f),
+		mchickenAutoMove(true),
+		mChangeDirectionTimer(0.0f),
+		mChangeDirectionInterval(1.0f),
+		mChickenAreaMinX(-20.0f),
+		mChickenAreaMaxX(20.0f),
+		mChickenAreaMinZ(-20.0f),
+		mChickenAreaMaxZ(20.0f)
+
     {
         mDepthStencilBufferEnabled = true;
         mMultiSamplingEnabled = true;
@@ -493,9 +514,47 @@ namespace Rendering
 
     void RenderingGame::Update(const GameTime &gameTime)
     {
+		Model* mChicken;
+		Vector3 mChickenPositionLocal;
 
 		mFpsComponent->Update(gameTime);
 		Game::Update(gameTime);
+		float dt = static_cast<float>(gameTime.ElapsedGameTime());
+		Vector3 movement = Vector3(0.0f, 0.0f, 0.0f);
+
+		if (mchickenAutoMove && mModel1 != nullptr)
+		{
+			mChangeDirectionTimer += dt;
+			if (mChangeDirectionTimer >= mChangeDirectionInterval)
+			{
+				const float twoPi = XM_2PI;
+				float t = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
+				float angle = t * twoPi;
+				mChickenDirection.x = std::cos(angle);
+				mChickenDirection.y = 0.0f;
+				mChickenDirection.z = std::sin(angle);
+
+				mChangeDirectionTimer = 0.0f;
+				float jitter = (static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f) * 0.8f;
+				mChangeDirectionInterval = (std::max)(0.5f, 2.0f + jitter);
+			}
+			mChickenPosition.x += mChickenDirection.x * mChickenSpeed * dt;
+			mChickenPosition.z += mChickenDirection.z * mChickenSpeed * dt;
+
+			if (mChickenPosition.z < mChickenAreaMinZ)
+			{
+				mChickenPosition.z = mChickenAreaMinZ;
+				mChickenDirection.z = -mChickenDirection.z;
+			}
+			else if (mChickenPosition.z > mChickenAreaMaxZ)
+			{
+				mChickenPosition.z = mChickenAreaMaxZ;
+				mChickenDirection.z = -mChickenDirection.z;
+			}
+			XMMATRIX W = XMLoadFloat4x4(mModel1->WorldMatrix());
+			W.r[3] = XMVectorSet(mChickenPosition.x, mChickenPosition.y, mChickenPosition.z, 1.0f);
+			XMStoreFloat4x4(mModel1->WorldMatrix(), W);
+		}
 		
 
 		//Add "ESC" to exit the application
