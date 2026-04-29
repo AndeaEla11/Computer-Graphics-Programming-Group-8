@@ -42,6 +42,14 @@ namespace Rendering
         virtual void Shutdown() override;
 
     private:
+		enum class GameState
+		{
+			Menu,
+			Playing,
+			Paused,
+			Quit
+		};
+		GameState mCurrentState = GameState::Menu;
 		static const XMFLOAT4 BackgroundColor;
         FirstPersonCamera * mCamera;
         TriangleDemo* mDemo;
@@ -58,6 +66,7 @@ namespace Rendering
 		ModelFromFile* mModel5;
 		ModelFromFile* mModel7;
 		ModelFromFile* mModel8;
+		ID3D11ShaderResourceView* mMainMenuTexture;
 
 		std::vector<ModelFromFile*> mModels;
 
