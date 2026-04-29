@@ -33,15 +33,15 @@ namespace Rendering
 	RenderingGame::RenderingGame(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
 		: Game(instance, windowClass, windowTitle, showCommand),
 
-		
-		
 
-		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr), 
+
+
+		mDemo(nullptr), mDirectInput(nullptr), mKeyboard(nullptr), mMouse(nullptr),
 		mFpsComponent(nullptr), mRenderStateHelper(nullptr), mObjectDiffuseLight(nullptr),
 		mModel2(nullptr), mModel3(nullptr), mModel4(nullptr), mModel5(nullptr), mModel7(nullptr),
 		mModel8(nullptr), mScore(0), mSpriteBatch(nullptr), mSpriteFont(nullptr), mMainMenuTexture(nullptr),
 
-	
+
 
 		mChickenSpeed(5.0f),
 		mchickenAutoMove(true),
@@ -70,21 +70,6 @@ namespace Rendering
 		mServices.AddService(Camera::TypeIdClass(), mCamera);
 		ShowCursor(TRUE);
 
-		mDemo = new TriangleDemo(*this, *mCamera);
-		mComponents.push_back(mDemo);
-		HRESULT hr = DirectX::CreateWICTextureFromFile(
-			mDirect3DDevice,
-			mDirect3DDeviceContext,
-			L"Content\\Textures\\MainMenu.png",
-			nullptr,
-			&mMainMenuTexture
-		);
-
-		if (FAILED(hr))
-		{
-			throw GameException("Could not load MainMenu.png", hr);
-		}
-
 		//Remember that the component is a management class for all objects in the D3D rendering engine. 
 		//It provides a centralized place to create and release objects. 
 		//NB: In C++ and other similar languages, to instantiate a class is to create an object.
@@ -103,10 +88,10 @@ namespace Rendering
 
 		//SetPosition(rotateX, rotateY, rotateZ, scale, translateX, translateY, translateZ);
 
-		
+
 		for (int i = 0; i < 5; i++)
 		{
-			ModelFromFile* chicken = new ModelFromFile(*this,*mCamera,"Content\\Models\\chicken_root.fbx",L"A Chicken",20,L"Content\\Textures\\chicken_color.jpg");
+			ModelFromFile* chicken = new ModelFromFile(*this, *mCamera, "Content\\Models\\chicken_root.fbx", L"A Chicken", 20, L"Content\\Textures\\chicken_color.jpg");
 
 			float x = -10.0f + (i * 5.0f);
 			float z = -5.0f + (i * 2.0f);
@@ -120,9 +105,20 @@ namespace Rendering
 			mComponents.push_back(chicken);
 		}
 
+		mDemo = new TriangleDemo(*this, *mCamera);
+		mComponents.push_back(mDemo);
+		HRESULT hr = DirectX::CreateWICTextureFromFile(
+			mDirect3DDevice,
+			mDirect3DDeviceContext,
+			L"Content\\Textures\\MainMenu.png",
+			nullptr,
+			&mMainMenuTexture
+		);
 
-		
-
+		if (FAILED(hr))
+		{
+			throw GameException("Could not load MainMenu.png", hr);
+		}
 
 		ModelFromFile* model = new ModelFromFile(*this, *mCamera, "Content\\Models\\bench.3ds", L"A Bench", 10, L"Content\\Textures\\bench.jpg");
 		model->SetPosition(-1.57f, 3.13f, 0.0f, 0.007f, 12.0f, 0.6f, -3.9f);
@@ -504,7 +500,7 @@ namespace Rendering
 		//house object with diffuse lighting effect:
 		mObjectDiffuseLight = new ObjectDiffuseLight(*this, *mCamera);
 
-		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.03f, 9.0f,  5.0f, -14.0f);
+		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.03f, 9.0f, 5.0f, -14.0f);
 
 		mObjectDiffuseLight->SetPosition(-1.57f, 0.0f, 0.0f, 0.03f, 9.0f, 5.5f, -14.0f);
 
@@ -534,10 +530,6 @@ namespace Rendering
 		DeleteObject(mMouse);
 		ReleaseObject(mDirectInput);
 
-		
-
-
-		
 
 		DeleteObject(mModel2);
 		DeleteObject(mModel3);
@@ -563,11 +555,16 @@ namespace Rendering
 
 		mChickens.clear();
 
-        Game::Shutdown();
-    }
+		Game::Shutdown();
+	}
 
 	void RenderingGame::Update(const GameTime& gameTime)
 	{
+		bool escPressed = mKeyboard->WasKeyPressedThisFrame(DIK_ESCAPE);
+		bool pPressed = mKeyboard->WasKeyPressedThisFrame(DIK_P);
+		bool enterPressed = mKeyboard->WasKeyPressedThisFrame(DIK_RETURN);
+		bool spacePressed = mKeyboard->WasKeyPressedThisFrame(DIK_SPACE);
+
 		Model* mChicken;
 		Vector3 mChickenPositionLocal;
 
@@ -634,18 +631,10 @@ namespace Rendering
 			}
 		}
 
-
-		//Add "ESC" to exit the application
-		if (mKeyboard->WasKeyPressedThisFrame(DIK_ESCAPE))
-		{
-			Exit();
-		}
-
-
 		//bounding box , we need to see if we need to do the picking test
 		if (Game::toPick)
 		{
-			
+
 			for (int i = 0; i < mChickens.size(); i++)
 			{
 				if (mChickens[i]->Visible())
@@ -656,8 +645,7 @@ namespace Rendering
 
 			Game::toPick = false;
 		}
-
-		if (!mGameWon && mScore >= mWinScore)
+		else if (!mGameWon && mScore >= mWinScore)
 		{
 			mGameWon = true;
 
@@ -673,26 +661,11 @@ namespace Rendering
 			}
 		}
 
-
-		Game::Shutdown();
-
-	}
-
-	void RenderingGame::Update(const GameTime& gameTime)
-	{
-		mKeyboard->Update(gameTime);
-		mFpsComponent->Update(gameTime);
-
-		bool escPressed = mKeyboard->WasKeyPressedThisFrame(DIK_ESCAPE);
-		bool pPressed = mKeyboard->WasKeyPressedThisFrame(DIK_P);
-		bool enterPressed = mKeyboard->WasKeyPressedThisFrame(DIK_RETURN);
-		bool spacePressed = mKeyboard->WasKeyPressedThisFrame(DIK_SPACE);
-
-		if (mCurrentState == GameState::Playing)
+		if (mCurrentState == GameState::Menu)
 		{
-			if (pPressed)
+			if (enterPressed || spacePressed)
 			{
-				mCurrentState = GameState::Paused;
+				mCurrentState = GameState::Playing;
 				return;
 			}
 			else if (escPressed)
@@ -700,67 +673,13 @@ namespace Rendering
 				Exit();
 				return;
 			}
-
-			Game::Update(gameTime);
-
-			float dt = static_cast<float>(gameTime.ElapsedGameTime());
-
-			if (mchickenAutoMove && mModel1 != nullptr)
+		}
+		else if (mCurrentState == GameState::Playing)
+		{
+			if (pPressed)
 			{
-				mChangeDirectionTimer += dt;
-
-				if (mChangeDirectionTimer >= mChangeDirectionInterval)
-				{
-					const float twoPi = XM_2PI;
-					float t = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
-					float angle = t * twoPi;
-
-					mChickenDirection.x = std::cos(angle);
-					mChickenDirection.y = 0.0f;
-					mChickenDirection.z = std::sin(angle);
-
-					mChangeDirectionTimer = 0.0f;
-
-					float jitter = (static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f) * 0.8f;
-					mChangeDirectionInterval = (std::max)(0.5f, 2.0f + jitter);
-				}
-
-				mChickenPosition.x += mChickenDirection.x * mChickenSpeed * dt;
-				mChickenPosition.z += mChickenDirection.z * mChickenSpeed * dt;
-
-				if (mChickenPosition.z < mChickenAreaMinZ)
-				{
-					mChickenPosition.z = mChickenAreaMinZ;
-					mChickenDirection.z = -mChickenDirection.z;
-				}
-				else if (mChickenPosition.z > mChickenAreaMaxZ)
-				{
-					mChickenPosition.z = mChickenAreaMaxZ;
-					mChickenDirection.z = -mChickenDirection.z;
-				}
-
-				if (mChickenPosition.x < mChickenAreaMinX)
-				{
-					mChickenPosition.x = mChickenAreaMinX;
-					mChickenDirection.x = -mChickenDirection.x;
-				}
-				else if (mChickenPosition.x > mChickenAreaMaxX)
-				{
-					mChickenPosition.x = mChickenAreaMaxX;
-					mChickenDirection.x = -mChickenDirection.x;
-				}
-
-				XMMATRIX W = XMLoadFloat4x4(mModel1->WorldMatrix());
-				W.r[3] = XMVectorSet(mChickenPosition.x, mChickenPosition.y, mChickenPosition.z, 1.0f);
-				XMStoreFloat4x4(mModel1->WorldMatrix(), W);
-			}
-
-			if (Game::toPick)
-			{
-				if (mModel1->Visible())
-					Pick(Game::screenX, Game::screenY, mModel1);
-
-				Game::toPick = false;
+				mCurrentState = GameState::Paused;
+				return;
 			}
 		}
 		else if (mCurrentState == GameState::Paused)
@@ -776,25 +695,7 @@ namespace Rendering
 				return;
 			}
 		}
-		else if (mCurrentState == GameState::Menu)
-		{
-			if (enterPressed || spacePressed)
-			{
-				mCurrentState = GameState::Playing;
-				return;
-			}
-			else if (escPressed)
-			{
-				Exit();
-				return;
-			}
-		}
 	}
-
-
-
-
-
 
 	// do the picking here
 
@@ -850,95 +751,66 @@ namespace Rendering
 		mDirect3DDeviceContext->ClearRenderTargetView(mRenderTargetView, reinterpret_cast<const float*>(&BackgroundColor));
 		mDirect3DDeviceContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		void RenderingGame::Draw(const GameTime & gameTime)
+		if (mCurrentState == GameState::Menu)
 		{
-			mDirect3DDeviceContext->ClearRenderTargetView(mRenderTargetView, reinterpret_cast<const float*>(&BackgroundColor));
-			mDirect3DDeviceContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+			mRenderStateHelper->SaveAll();
+			mSpriteBatch->Begin();
 
-
-			if (mCurrentState == GameState::Menu)
+			if (mMainMenuTexture != nullptr)
 			{
-				mRenderStateHelper->SaveAll();
-				mSpriteBatch->Begin();
-
-				if (mMainMenuTexture != nullptr)
-				{
-					RECT destRect = { 0, 0, static_cast<LONG>(mScreenWidth), static_cast<LONG>(mScreenHeight) };
-					mSpriteBatch->Draw(mMainMenuTexture, destRect);
-				}
-
-
+				RECT destRect = { 0, 0, static_cast<LONG>(mScreenWidth), static_cast<LONG>(mScreenHeight) };
+				mSpriteBatch->Draw(mMainMenuTexture, destRect);
 			}
 
-			void RenderingGame::ResetGame()
+			float w = static_cast<float>(mScreenWidth);
+			float h = static_cast<float>(mScreenHeight);
+
+			mSpriteFont->DrawString(mSpriteBatch, L"CHICKEN ADVENTURE",
+				XMFLOAT2(w / 2 - 150.0f, h / 2 - 80.0f), Colors::White);
+
+			mSpriteFont->DrawString(mSpriteBatch, L"Press ENTER to Start",
+				XMFLOAT2(w / 2 - 120.0f, h / 2), Colors::Yellow);
+
+			mSpriteFont->DrawString(mSpriteBatch, L"Press ESC to Quit",
+				XMFLOAT2(w / 2 - 120.0f, h / 2 + 60.0f), Colors::Red);
+
+			mSpriteBatch->End();
+			mRenderStateHelper->RestoreAll();
+		}
+		else
+		{
+			Game::Draw(gameTime);
+
+			mRenderStateHelper->SaveAll();
+			mFpsComponent->Draw(gameTime);
+
+			mSpriteBatch->Begin();
+
+			std::wostringstream scoreLabel;
+			scoreLabel << L"Your current score: " << mScore;
+
+			mSpriteFont->DrawString(mSpriteBatch, scoreLabel.str().c_str(),
+				XMFLOAT2(0.0f, 120.0f), Colors::Red);
+
+			if (mCurrentState == GameState::Paused)
 			{
-				mScore = 0;
-				mGameWon = false;
+				float cx = mScreenWidth / 2.0f;
+				float cy = mScreenHeight / 2.0f;
 
-				for (int i = 0; i < mChickens.size(); i++)
-				{
-					mChickens[i]->SetVisible(true);
+				mSpriteFont->DrawString(mSpriteBatch, L"PAUSED",
+					XMFLOAT2(cx - 40.0f, cy - 60.0f), Colors::White);
 
-					mChickenPositions[i].x = -10.0f + (i * 5.0f);
-					mChickenPositions[i].z = -5.0f + (i * 2.0f);
+				mSpriteFont->DrawString(mSpriteBatch, L"Press 'P' to Resume",
+					XMFLOAT2(cx - 100.0f, cy), Colors::Yellow);
 
-					XMMATRIX W = XMLoadFloat4x4(mChickens[i]->WorldMatrix());
-					W.r[3] = XMVectorSet(
-						mChickenPositions[i].x,
-						mChickenPositions[i].y,
-						mChickenPositions[i].z,
-						1.0f
-					);
-					XMStoreFloat4x4(mChickens[i]->WorldMatrix(), W);
-
-					float w = static_cast<float>(mScreenWidth);
-					float h = static_cast<float>(mScreenHeight);
-
-					mSpriteFont->DrawString(mSpriteBatch, L"CHICKEN ADVENTURE",
-						XMFLOAT2(w / 2 - 150.0f, h / 2 - 80.0f), Colors::White);
-
-					mSpriteFont->DrawString(mSpriteBatch, L"Press ENTER to Start",
-						XMFLOAT2(w / 2 - 120.0f, h / 2), Colors::Yellow);
-
-					mSpriteFont->DrawString(mSpriteBatch, L"Press ESC to Quit",
-						XMFLOAT2(w / 2 - 120.0f, h / 2 + 60.0f), Colors::Red);
-
-					mSpriteBatch->End();
-					mRenderStateHelper->RestoreAll();
-				}
-			else
-			{
-				Game::Draw(gameTime);
-
-				mRenderStateHelper->SaveAll();
-				mFpsComponent->Draw(gameTime);
-
-				mSpriteBatch->Begin();
-
-				std::wostringstream scoreLabel;
-				scoreLabel << L"Your current score: " << mScore;
-
-				mSpriteFont->DrawString(mSpriteBatch, scoreLabel.str().c_str(),
-					XMFLOAT2(0.0f, 120.0f), Colors::Red);
-
-				if (mCurrentState == GameState::Paused)
-				{
-					float cx = mScreenWidth / 2.0f;
-					float cy = mScreenHeight / 2.0f;
-
-					mSpriteFont->DrawString(mSpriteBatch, L"PAUSED",
-						XMFLOAT2(cx - 40.0f, cy - 60.0f), Colors::White);
-
-					mSpriteFont->DrawString(mSpriteBatch, L"Press 'P' to Resume",
-						XMFLOAT2(cx - 100.0f, cy), Colors::Yellow);
-
-					mSpriteFont->DrawString(mSpriteBatch, L"Press 'ESC' for Main Menu",
-						XMFLOAT2(cx - 130.0f, cy + 60.0f), Colors::Red);
-				}
-
-				mSpriteBatch->End();
-				mRenderStateHelper->RestoreAll();
+				mSpriteFont->DrawString(mSpriteBatch, L"Press 'ESC' for Main Menu",
+					XMFLOAT2(cx - 130.0f, cy + 60.0f), Colors::Red);
 			}
+
+			mSpriteBatch->End();
+			mRenderStateHelper->RestoreAll();
+		}
+
 
 			HRESULT hr = mSwapChain->Present(0, 0);
 			if (FAILED(hr))
@@ -947,7 +819,25 @@ namespace Rendering
 
 			}
 
-			}
+		}
+
+	void RenderingGame::ResetGame()
+	{
+		mScore = 0;
+		mGameWon = false;
+
+		for (int i = 0; i < mChickens.size(); i++)
+		{
+			mChickens[i]->SetVisible(true);
+			mChickenPositions[i].x = -10.0f + (i * 5.0f);
+			mChickenPositions[i].z = -5.0f + (i * 2.0f);
+
+			XMMATRIX W = XMLoadFloat4x4(mChickens[i]->WorldMatrix());
+			W.r[3] = XMVectorSet(mChickenPositions[i].x, mChickenPositions[i].y, mChickenPositions[i].z, 1.0f);
+			XMStoreFloat4x4(mChickens[i]->WorldMatrix(), W);
+
 		}
 	}
+}
+
 			
